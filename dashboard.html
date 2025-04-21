@@ -1,21 +1,60 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard - Azarr Store</title>
+  <title>Dashboard Admin - Azarr Store</title>
+  <script type="module" src="firebase.js"></script>
 </head>
 <body>
-  <h1>Dashboard Azarr Store</h1>
-  <p>Halo, <strong>Pengguna</strong>!</p>
+  <h2>Tambah Deposit</h2>
+  <form id="depositForm">
+    <input type="text" id="user" placeholder="Nama pengguna" required><br>
+    <input type="number" id="amount" placeholder="Jumlah deposit" required><br>
+    <button type="submit">Submit Deposit</button>
+  </form>
 
-  <h2>Saldo Kamu</h2>
-  <p><strong>Rp0</strong> (Belum top up)</p>
+  <h2>Input Order</h2>
+  <form id="orderForm">
+    <input type="text" id="buyer" placeholder="Nama pembeli" required><br>
+    <select id="product">
+      <option value="Ram 1GB">Ram 1GB - Rp1.000</option>
+      <option value="Ram 2GB">Ram 2GB - Rp2.000</option>
+      <!-- lanjutkan sampai Unlimited -->
+    </select><br>
+    <button type="submit">Submit Order</button>
+  </form>
 
-  <h2>Riwayat Order</h2>
-  <ul>
-    <li>Tidak ada transaksi</li>
-  </ul>
+  <script type="module">
+    import { db, ref, set, push } from './firebase.js';
 
-  <p><a href="deposit.html">Top Up Saldo</a> | <a href="index.html">Kembali ke Produk</a></p>
+    document.getElementById("depositForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const user = document.getElementById("user").value;
+      const amount = document.getElementById("amount").value;
+
+      const depositRef = push(ref(db, "deposits"));
+      set(depositRef, {
+        user: user,
+        amount: amount,
+        time: new Date().toISOString()
+      });
+
+      alert("Deposit ditambahkan!");
+    });
+
+    document.getElementById("orderForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const buyer = document.getElementById("buyer").value;
+      const product = document.getElementById("product").value;
+
+      const orderRef = push(ref(db, "orders"));
+      set(orderRef, {
+        buyer: buyer,
+        product: product,
+        time: new Date().toISOString()
+      });
+
+      alert("Order berhasil dikirim!");
+    });
+  </script>
 </body>
 </html>
