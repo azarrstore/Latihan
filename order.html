@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Panel - Azarr Store</title>
+</head>
+<body>
+  <h1>Form Pemesanan Panel</h1>
+
+  <div id="info"></div>
+
+  <form id="orderForm">
+    <label>Nama:</label><br>
+    <input type="text" id="nama" required><br><br>
+
+    <label>Username Discord/Telegram:</label><br>
+    <input type="text" id="username" required><br><br>
+
+    <label>Catatan Tambahan:</label><br>
+    <textarea id="catatan" rows="3"></textarea><br><br>
+
+    <button type="submit">Kirim Order via WhatsApp</button>
+  </form>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const paket = urlParams.get('paket');
+    const harga = urlParams.get('harga');
+
+    document.getElementById('info').innerHTML = `<p>Kamu memesan: <strong>${paket}</strong> seharga <strong>Rp${harga}</strong></p>`;
+
+    document.get
